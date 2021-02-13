@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizzler/quiz_brain.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 
@@ -28,7 +29,28 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+  QuizBrain quizBrain = QuizBrain();
   void checkAnswer(bool userAnswer) {
+    if (quizBrain.isFinished()) {
+      Alert(
+          context: context,
+          type: AlertType.error,
+          title: 'You\'re finished',
+          desc: 'Press button to reset.',
+          buttons: [
+            DialogButton(
+              child: Text('Reset'),
+              onPressed: () {
+                setState(() {
+                  quizBrain.resetQuiz();
+                  scoreKeeper.clear();
+                });
+                Navigator.pop(context);
+              },
+              width: 120,
+            )
+          ]).show();
+    }
     setState(() {
       if (userAnswer == quizBrain.getQuestionTextAnswer()) {
         scoreKeeper.add(
@@ -49,7 +71,6 @@ class _QuizPageState extends State<QuizPage> {
     quizBrain.setQuestionNumber();
   }
 
-  QuizBrain quizBrain = QuizBrain();
   @override
   Widget build(BuildContext context) {
     return Column(
