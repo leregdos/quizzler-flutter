@@ -28,6 +28,27 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scoreKeeper = [];
+  void checkAnswer(bool userAnswer) {
+    setState(() {
+      if (userAnswer == quizBrain.getQuestionTextAnswer()) {
+        scoreKeeper.add(
+          Icon(
+            Icons.check,
+            color: Colors.green,
+          ),
+        );
+      } else {
+        scoreKeeper.add(
+          Icon(
+            Icons.close,
+            color: Colors.red,
+          ),
+        );
+      }
+    });
+    quizBrain.setQuestionNumber();
+  }
+
   QuizBrain quizBrain = QuizBrain();
   @override
   Widget build(BuildContext context) {
@@ -65,24 +86,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (quizBrain.getQuestionTextAnswer() == true) {
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  } else {
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                    );
-                  }
-                  quizBrain.setQuestionNumber();
-                });
+                checkAnswer(true);
                 //The user picked true.
               },
             ),
@@ -101,24 +105,7 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                setState(() {
-                  if (quizBrain.getQuestionTextAnswer() == false) {
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ),
-                    );
-                  } else {
-                    scoreKeeper.add(
-                      Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ),
-                    );
-                  }
-                  quizBrain.setQuestionNumber();
-                });
+                checkAnswer(false);
                 //The user picked false.
               },
             ),
