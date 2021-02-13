@@ -1,6 +1,7 @@
 import 'question.dart';
 
 class QuizBrain {
+  int _questionNumber = 0;
   List<Question> _questionBank = [
     Question('Paris is the capital of France', true),
     Question('Cows are awesome animals', true),
@@ -31,12 +32,17 @@ class QuizBrain {
         'In West Virginia, USA, if you accidentally hit an animal with your car, you are free to take it home to eat.',
         true),
   ];
-
-  String getQuestionText(int qNumber) {
-    return _questionBank[qNumber].questionText;
+  void setQuestionNumber() {
+    if (_questionNumber < _questionBank.length) {
+      _questionNumber++;
+    }
   }
 
-  bool getQuestionTextAnswer(int qNumber) {
-    return _questionBank[qNumber].questionAnswer;
+  String getQuestionText() {
+    return _questionBank[_questionNumber].questionText;
+  }
+
+  bool getQuestionTextAnswer() {
+    return _questionBank[_questionNumber].questionAnswer;
   }
 }
